@@ -1,0 +1,5 @@
+{
+  "name": "Grid Tech Troubleshooter",
+  "description": "An AI-powered chatbot for electric grid substation technicians. Upload a knowledge base document to get troubleshooting, maintenance, and failure query support with citations from official standards.",
+  "requestFramePermissions": []
+}
