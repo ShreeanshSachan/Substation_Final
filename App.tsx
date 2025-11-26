@@ -51,8 +51,13 @@ const App: React.FC = () => {
     setError(null);
 
     try {
-      const responseText = await getTroubleshootingResponse(knowledgeBase, query);
-      const botMessage: Message = { id: `bot-${Date.now()}`, text: responseText, sender: 'bot' };
+      const response = await getTroubleshootingResponse(knowledgeBase, query);
+      const botMessage: Message = { 
+        id: `bot-${Date.now()}`, 
+        text: response.text, 
+        sender: 'bot', 
+        groundingSources: response.groundingSources 
+      };
       setMessages(prevMessages => [...prevMessages, botMessage]);
     } catch (e) {
       console.error(e);
