@@ -39,7 +39,7 @@ Query: "${query}"`;
 
   try {
     const response = await ai.models.generateContent({
-        model: 'gemini-3-pro-preview',
+        model: 'gemini-2.5-flash',
         contents: contents,
         config: {
             systemInstruction: systemInstruction,
@@ -60,8 +60,14 @@ Query: "${query}"`;
         text: response.text || '',
         groundingSources
     };
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error calling Gemini API:", error);
+
+    // Improved error handling for rate limits
+    if (error.status === 429 || (error.message && (error.message.includes('429') || error.message.includes('quota')))) {
+       throw new Error("You have exceeded the API rate limit. Please wait a moment before trying again.");
+    }
+
     if (error instanceof Error) {
         throw new Error(`Error communicating with the AI model: ${error.message}`);
     }
